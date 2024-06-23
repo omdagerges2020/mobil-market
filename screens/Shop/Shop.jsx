@@ -3,7 +3,7 @@ import { View, Text, ScrollView } from "react-native";
 import { Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import tw from "twrnc";
-import { getCategories } from "../reduxsystem/slices/CategoriesSlice";
+import { getCategories } from "../../reduxsystem/slices/CategoriesSlice";
 import { useNavigation } from "@react-navigation/native";
 
 
@@ -40,7 +40,7 @@ const Products = () => {
           <View key={index}>
             <View style={tw`mt-5 border-b-[.3px] border-gray-300	`}>
               <View style={tw`px-[40px] pb-5`}>
-                <Text onPress={()=>navigate.navigate("Categoryname")}>{categoryObj.name}</Text>
+                <Text onPress={()=>navigate.navigate("Categoryname", {categoryName: categoryObj.slug})}>{categoryObj.name}</Text>
               </View>
             </View>
           </View>

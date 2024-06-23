@@ -1,15 +1,13 @@
 import { View, Text, ScrollView } from "react-native";
 import React, { useEffect } from "react";
 import tw from "twrnc";
-import { Link } from "@react-navigation/native";
+import { Link, useNavigation } from "@react-navigation/native";
 import { Avatar, Card } from "react-native-paper";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useDispatch, useSelector } from "react-redux";
 import { getHomeProducts } from "../reduxsystem/slices/homeProductsSlice";
 import Header from "./pageshome/Header";
 import LoadingPage from "./LoadingPage";
-
-
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 
@@ -20,6 +18,9 @@ const Home = () => {
 
   // Dispatching
   const dispatch = useDispatch();
+
+  // Navigation
+  const navigate = useNavigation();
 
   // UseEffect
   useEffect(() => {
@@ -59,7 +60,7 @@ const Home = () => {
         >
           {products.map((prod, index) => (
             <View key={index}>
-              <Card style={tw`mt-5 w-[200px]  px-0 mr-5`}>
+              <Card onPress={()=> navigate.navigate("SingleProduct", {productId: prod.id, productBrand: prod.brand})} style={tw`mt-5 w-[200px]  px-0 mr-5`}>
                 {/* Card image */}
                 <Card.Cover source={{ uri: `${prod.thumbnail}` }} />
                 <Card.Content style={tw`px-1 mt-2`}>
@@ -98,6 +99,7 @@ const Home = () => {
             </View>
           ))}
         </ScrollView>
+
         {/* sale-part */}
         <View style={tw`mt-7 w-full flex-row justify-between px-3`}>
           {/*  */}
@@ -119,41 +121,40 @@ const Home = () => {
         >
           {products.map((prod, index) => (
             <View key={index}>
-              <Card style={tw`mt-5 w-[200px]  px-0 mr-5`}>
-                {/* Card image */}
-                <Card.Cover source={{ uri: `${prod.thumbnail}` }} />
-                <Card.Content style={tw`px-1 mt-2`}>
-                  <View style={tw`flex-row gap-2`}>
-                    <FontAwesome name="star" size={18} color={"yellow"} />
-                    <FontAwesome name="star" size={18} color={"yellow"} />
-                    <FontAwesome name="star" size={18} color={"yellow"} />
-                    <FontAwesome name="star" size={18} color={"yellow"} />
-                    <FontAwesome name="star" size={18} color={"yellow"} />
-                    <Text>({prod.rating})</Text>
-                  </View>
-                  {/* title */}
-                  <Text variant="bodyMedium" style={tw`text-gray-500`}>
-                    {prod.title}
-                  </Text>
-                  {/* Category */}
-                  <Text
-                    variant="bodyMedium"
-                    style={tw`text-black font-bold capitalize`}
-                  >
-                    {prod.category}
-                  </Text>
-                  {/* Price */}
-                  <Text>
-                    <Text style={tw`text-red-700`}>Price: </Text>
-                    {prod.price}$
-                  </Text>
-                </Card.Content>
-              </Card>
+                <Card onPress={()=> navigate.navigate("SingleProduct", {productId: prod.id})} style={tw`mt-5 w-[200px]  px-0 mr-5`}>
+                  {/* Card image */}
+                  <Card.Cover source={{ uri: `${prod.thumbnail}` }} />
+                  <Card.Content style={tw`px-1 mt-2`}>
+                    <View style={tw`flex-row gap-2`}>
+                      <FontAwesome name="star" size={18} color={"yellow"} />
+                      <FontAwesome name="star" size={18} color={"yellow"} />
+                      <FontAwesome name="star" size={18} color={"yellow"} />
+                      <FontAwesome name="star" size={18} color={"yellow"} />
+                      <FontAwesome name="star" size={18} color={"yellow"} />
+                      <Text>({prod.rating})</Text>
+                    </View>
+                    {/* title */}
+                    <Text variant="bodyMedium" style={tw`text-gray-500`}>
+                      {prod.title}
+                    </Text>
+                    {/* Category */}
+                    <Text
+                      variant="bodyMedium"
+                      style={tw`text-black font-bold capitalize`}
+                    >
+                      {prod.category}
+                    </Text>
+                    {/* Price */}
+                    <Text>
+                      <Text style={tw`text-red-700`}>Price: </Text>
+                      {prod.price}$
+                    </Text>
+                  </Card.Content>
+                </Card>
             </View>
           ))}
         </ScrollView>
       </View>
-   
     </ScrollView>
   );
 };
