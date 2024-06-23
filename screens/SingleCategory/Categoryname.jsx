@@ -85,7 +85,7 @@ const Categoryname = ({
         >
           {categoryProducts.map((prod, index) => (
             <View key={index}>
-              <Card style={tw`mt-5 w-[180px] relative`}>
+              <Card onPress={()=> navigate.navigate("SingleProduct", {productId: prod.id, productBrand: prod.brand})} style={tw`mt-5 w-[180px] relative`}>
                 {/* Card image */}
                 <Card.Cover source={{ uri: `${prod.thumbnail}` }} />
                 {/* heart icon */}
